@@ -4,6 +4,7 @@ export const API_PATHS = {
   },
 
   ALBUMS: {
-    GET_ALL_ALBUMS: "/albums"
+    GET_ALL_ALBUMS: "/albums",
+    GET_ALBUM_BY_ID: (albumId: string) =>  `/albums/${albumId}`
   }
 }
