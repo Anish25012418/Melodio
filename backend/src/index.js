@@ -10,6 +10,7 @@ import statRoutes from "./routes/statRoutes.js";
 import {connectDB} from "./lib/db.js";
 import fileUpload from "express-fileupload"
 import path from "path";
+import cors from "cors";
 
 
 dotenv.config();
@@ -17,6 +18,11 @@ dotenv.config();
 const app = express();
 const __dirname = path.resolve()
 const PORT = process.env.PORT || 5000;
+
+app.use(cors({
+  origin: "http://localhost:3000",
+  credentials: true,
+}));
 
 app.use(express.json()); //to parse req.body
 
