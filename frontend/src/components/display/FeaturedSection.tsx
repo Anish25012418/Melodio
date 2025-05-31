@@ -1,5 +1,6 @@
 import {useMusicStore} from "@/stores/useMusicStore.ts";
 import FeaturedGridSkeleton from "@/components/skeletons/FeaturedGridSkeleton.tsx";
+import PlayButton from "@/components/ui/PlayButton.tsx";
 
 const FeaturedSection = () => {
 
@@ -19,8 +20,8 @@ const FeaturedSection = () => {
             <p className="font-medium truncate">{song.title}</p>
             <p className="text-sm text-zinc-400 truncate">{song.artist}</p>
           </div>
+          <PlayButton song={song} />
         </div>
-
       ))}
     </div>
   );
