@@ -5,7 +5,8 @@ export const API_PATHS = {
 
   ALBUMS: {
     GET_ALL_ALBUMS: "/albums",
-    GET_ALBUM_BY_ID: (albumId: string) =>  `/albums/${albumId}`
+    GET_ALBUM_BY_ID: (albumId: string) =>  `/albums/${albumId}`,
+    DELETE_ALBUM: (albumId: string) =>  `/albums/${albumId}`
   },
 
   USERS: {
@@ -17,8 +18,14 @@ export const API_PATHS = {
   },
 
   SONGS: {
+    GET_ALL_SONGS: "/songs",
     GET_FEATURED_SONGS: "/songs/featured",
     GET_MADE_FOR_YOU_SONGS: "/songs/made-for-you",
     GET_TRENDING_SONGS: "/songs/trending",
+    DELETE_SONG: (songId: string) =>  `/songs/${songId}`
+  },
+
+  STATS: {
+    GET_ALL_STATS: "/stats",
   }
 }
