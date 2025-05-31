@@ -1,6 +1,7 @@
 import {ResizableHandle, ResizablePanel, ResizablePanelGroup} from "@/components/ui/resizable.tsx";
 import {Outlet} from "react-router-dom";
 import LeftSidebar from "@/components/display/LeftSidebar.tsx";
+import FriendsActivity from "@/components/display/FriendsActivity.tsx";
 
 const MainLayout = () => {
   const isMobile = false
@@ -20,7 +21,7 @@ const MainLayout = () => {
         <ResizableHandle className="w-2 bg-black rounded-lg transition-colors"/>
 
         <ResizablePanel defaultSize={20} minSize={0} maxSize={25} collapsedSize={0}>
-          right sidebar layout
+          <FriendsActivity/>
         </ResizablePanel>
       </ResizablePanelGroup>
     </div>
