@@ -10,9 +10,15 @@ type MusicStore = {
   isLoading: boolean,
   error: string | null,
   currentAlbum: Album | null,
+  featuredSongs: Song[],
+  madeForYouSongs: Song[],
+  trendingSongs: Song[]
 
   fetchAlbums: () => Promise<void>;
   fetchAlbumById: (id: string) => Promise<void>;
+  fetchFeaturedSongs: () => Promise<void>;
+  fetchMadeForYouSongs: () => Promise<void>;
+  fetchTrendingSongs: () => Promise<void>;
 }
 
 export const useMusicStore = create<MusicStore>((set) => ({
@@ -21,6 +27,9 @@ export const useMusicStore = create<MusicStore>((set) => ({
   isLoading: false,
   error: null,
   currentAlbum: null,
+  featuredSongs: [],
+  madeForYouSongs: [],
+  trendingSongs: [],
 
   fetchAlbums: async () => {
     set({
@@ -42,6 +51,42 @@ export const useMusicStore = create<MusicStore>((set) => ({
     try {
       const response = await axiosInstance.get(API_PATHS.ALBUMS.GET_ALBUM_BY_ID(id))
       set({currentAlbum: response.data})
+    }catch (error: any) {
+      set({error: error.response.data.message})
+    }finally {
+      set({isLoading: false})
+    }
+  },
+
+  fetchFeaturedSongs: async () => {
+    set({isLoading: true, error: null})
+    try {
+      const response = await axiosInstance.get(API_PATHS.SONGS.GET_FEATURED_SONGS)
+      set({featuredSongs: response.data})
+    }catch (error: any) {
+      set({error: error.response.data.message})
+    }finally {
+      set({isLoading: false})
+    }
+  },
+
+  fetchMadeForYouSongs: async () => {
+    set({isLoading: true, error: null})
+    try {
+      const response = await axiosInstance.get(API_PATHS.SONGS.GET_MADE_FOR_YOU_SONGS)
+      set({madeForYouSongs: response.data})
+    }catch (error: any) {
+      set({error: error.response.data.message})
+    }finally {
+      set({isLoading: false})
+    }
+  },
+
+  fetchTrendingSongs: async () => {
+    set({isLoading: true, error: null})
+    try {
+      const response = await axiosInstance.get(API_PATHS.SONGS.GET_TRENDING_SONGS)
+      set({trendingSongs: response.data})
     }catch (error: any) {
       set({error: error.response.data.message})
     }finally {
