@@ -1,5 +1,5 @@
-import SectionGridSkeleton from "@/components/skeletons/SectionGridSkeleton.tsx";
-import {Button} from "@/components/ui/button.tsx";
+import SectionGridSkeleton from "@/components/skeletons/SectionGridSkeleton.tsx";import PlayButton from "@/components/ui/PlayButton.tsx";
+import type {Song} from "@/types/song.ts";
 
 type SectionGridProps = {
   title: string;
@@ -13,9 +13,9 @@ const SectionGrid = ({title, songs, isLoading}: SectionGridProps) => {
     <div className="mb-8">
       <div className="flex items-center justify-between mb-4">
         <h2 className="text-xl sm:text-2xl font-bold">{title}</h2>
-        <Button variant="link" className="text-sm text-zinc-400 hover:text-white cursor-pointer">
-          Show All
-        </Button>
+        {/*<Button variant="link" className="text-sm text-zinc-400 hover:text-white cursor-pointer">*/}
+        {/*  Show All*/}
+        {/*</Button>*/}
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {songs.map((song) => (
@@ -26,6 +26,7 @@ const SectionGrid = ({title, songs, isLoading}: SectionGridProps) => {
                   <img src={song.imageUrl} alt={song.title}
                        className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" />
                 </div>
+               <PlayButton song={song}/>
              </div>
             <h3 className="font-medium mb-2 truncate">{song.title}</h3>
             <p className="text-sm text-zinc-400 truncate">{song.artist}</p>
