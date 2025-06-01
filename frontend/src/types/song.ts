@@ -9,3 +9,10 @@ export interface Song {
   createdAt: string;
   updatedAt: string;
 }
+
+export interface NewSong {
+  title: string;
+  artist: string;
+  albumId: string;
+  duration: number;
+}

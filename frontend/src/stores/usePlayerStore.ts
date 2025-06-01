@@ -56,6 +56,7 @@ export const usePlayerStore = create<PlayerStore>((set, get) => ({
 
   togglePlay: () => {
     const playingStatus = get().isPlaying;
+    console.log(playingStatus);
     set({
       isPlaying: !playingStatus,
     })

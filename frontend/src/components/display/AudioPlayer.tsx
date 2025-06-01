@@ -10,7 +10,7 @@ const AudioPlayer = () => {
 
   useEffect(() => {
     if (isPlaying) audioRef.current?.play()
-    else audioRef.current?.play()
+    else audioRef.current?.pause()
   }, [isPlaying])
 
   useEffect(() => {
