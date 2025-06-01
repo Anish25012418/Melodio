@@ -17,7 +17,7 @@ const getMessages = async (req, res, next) => {
     const { userId: myId } = await req.auth()
     const {userId} = req.params;
 
-    const {messages} = await Message.find({
+    const messages = await Message.find({
       $or: [
         {senderId: userId, receiverId: myId},
         {senderId: myId, receiverId: userId},

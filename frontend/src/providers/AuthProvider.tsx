@@ -40,7 +40,7 @@ const AuthProvider = ({children}: {children: React.ReactNode}) => {
     initAuth();
 
     return () => disconnectSocket()
-  }, [getToken])
+  }, [getToken, userId, checkAdminStatus, initSocket, disconnectSocket])
 
   if (loading) {
     return (

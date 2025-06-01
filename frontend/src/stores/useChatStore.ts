@@ -1,9 +1,9 @@
 import {create} from "zustand";
 import {API_PATHS} from "@/utils/apiPaths.ts";
 import {axiosInstance} from "@/lib/axios.ts";
-import type {Message} from "postcss";
 import {io} from "socket.io-client";
 import type {User} from "@/types/user.ts";
+import type {Message} from "@/types/message.ts";
 
 interface ChatStore {
   users: any[],
@@ -35,7 +35,7 @@ export const useChatStore = create<ChatStore>((set, get) => ({
   users: [],
   isLoading: false,
   error: null,
-  socket: null,
+  socket: socket,
   isConnected: false,
   onlineUsers: new Set(),
   userActivities: new Map(),
