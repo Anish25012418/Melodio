@@ -10,6 +10,7 @@ export const API_PATHS = {
 
   USERS: {
     GET_ALL_USERS: "/users",
+    GET_MESSAGES: (userId: string) =>  `/users/messages/${userId}`,
   },
 
   ADMIN: {
