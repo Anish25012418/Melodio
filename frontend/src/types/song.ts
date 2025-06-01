@@ -15,5 +15,4 @@ export interface NewSong {
   artist: string;
   albumId: string;
   duration: number;
-
 }

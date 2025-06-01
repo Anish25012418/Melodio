@@ -6,7 +6,7 @@ import DashboardStats from "@/components/admin/DashboardStats.tsx";
 import {Tabs, TabsContent, TabsList, TabsTrigger} from "@/components/ui/tabs.tsx";
 import {Album, Music} from "lucide-react";
 import SongsTabContent from "@/components/admin/songs/SongsTabContent.tsx";
-import AlbumsTabContent from "@/components/admin/AlbumsTabContent.tsx";
+import AlbumsTabContent from "@/components/admin/albums/AlbumsTabContent.tsx";
 
 const AdminPage = () => {
   const {isAdmin, isLoading} = useAuthStore();

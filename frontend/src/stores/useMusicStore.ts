@@ -28,7 +28,7 @@ type MusicStore = {
   stats: Stats
 }
 
-export const useMusicStore = create<MusicStore>((set) => ({
+export const useMusicStore = create<MusicStore>((set, get) => ({
   albums: [],
   songs: [],
   isLoading: false,
@@ -140,10 +140,11 @@ export const useMusicStore = create<MusicStore>((set) => ({
   deleteSong: async (id: string) => {
     set({isLoading: true, error: null})
     try {
-      await axiosInstance.delete(API_PATHS.SONGS.DELETE_SONG(id))
+      await axiosInstance.delete(API_PATHS.ADMIN.DELETE_SONG(id))
       set(state => ({
         songs: state.songs.filter(song => song._id !== id)
       }))
+      await get().fetchStats();
       toast.success('Song deleted Successfully.')
     } catch (error: any) {
       toast.error("Error deleting song" + error.message)
@@ -155,11 +156,12 @@ export const useMusicStore = create<MusicStore>((set) => ({
   deleteAlbum: async (id: string) => {
     set({isLoading: true, error: null})
     try {
-      await axiosInstance.delete(API_PATHS.ALBUMS.DELETE_ALBUM(id))
+      await axiosInstance.delete(API_PATHS.ADMIN.DELETE_ALBUM(id))
       set(state => ({
         albums: state.albums.filter(album => album._id !== id),
         songs: state.songs.filter(song => song.albumId !== id)
       }))
+      await get().fetchStats();
       toast.success('Album deleted Successfully.')
     } catch (error: any) {
       toast.error("Error deleting album" + error.message)

@@ -8,3 +8,9 @@ export interface Album {
   releaseYear: number;
   songs: Song[]
 }
+
+export interface NewAlbum {
+  title: string;
+  artist: string;
+  releaseYear: number;
+}

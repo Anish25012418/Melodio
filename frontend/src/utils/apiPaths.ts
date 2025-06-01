@@ -6,7 +6,6 @@ export const API_PATHS = {
   ALBUMS: {
     GET_ALL_ALBUMS: "/albums",
     GET_ALBUM_BY_ID: (albumId: string) =>  `/albums/${albumId}`,
-    DELETE_ALBUM: (albumId: string) =>  `/albums/${albumId}`
   },
 
   USERS: {
@@ -14,7 +13,11 @@ export const API_PATHS = {
   },
 
   ADMIN: {
-    CHECK_IS_ADMIN: "/admin/check"
+    CHECK_IS_ADMIN: "/admin/check",
+    CREATE_SONG: "/admin/songs",
+    CREATE_ALBUM: "/admin/albums",
+    DELETE_ALBUM: (albumId: string) =>  `admin/albums/${albumId}`,
+    DELETE_SONG: (songId: string) =>  `admin/songs/${songId}`
   },
 
   SONGS: {
@@ -22,7 +25,6 @@ export const API_PATHS = {
     GET_FEATURED_SONGS: "/songs/featured",
     GET_MADE_FOR_YOU_SONGS: "/songs/made-for-you",
     GET_TRENDING_SONGS: "/songs/trending",
-    DELETE_SONG: (songId: string) =>  `/songs/${songId}`
   },
 
   STATS: {
