@@ -1,5 +1,6 @@
 import {create} from "zustand"
 import type {Song} from "@/types/song.ts";
+import {useChatStore} from "@/stores/useChatStore.ts";
 
 interface PlayerStore {
   currentSong: Song | null;
@@ -13,6 +14,16 @@ interface PlayerStore {
   togglePlay: () => void;
   playNext: () => void;
   playPrev: () => void;
+}
+
+const updateActivity = (song: Song | null) => {
+  const socket = useChatStore.getState().socket;
+  if (socket.auth) {
+    socket.emit("update_activity", {
+      userId: socket.auth.userId,
+      activity: song ? `Playing ${song.title} by ${song.artist}` : "Idle",
+    })
+  }
 }
 
 export const usePlayerStore = create<PlayerStore>((set, get) => ({
@@ -34,6 +45,8 @@ export const usePlayerStore = create<PlayerStore>((set, get) => ({
 
     const song = songs[startIndex];
 
+    updateActivity(song);
+
     set({
       queue: songs,
       currentSong: song,
@@ -44,6 +57,8 @@ export const usePlayerStore = create<PlayerStore>((set, get) => ({
 
   setCurrentSong: (song: Song | null) => {
     if (!song) return
+
+    updateActivity(song);
 
     const songIndex = get().queue.findIndex(s => s._id === song._id);
 
@@ -56,45 +71,57 @@ export const usePlayerStore = create<PlayerStore>((set, get) => ({
 
   togglePlay: () => {
     const playingStatus = get().isPlaying;
-    console.log(playingStatus);
+
+    const currentSong = get().currentSong;
+
+    updateActivity(!playingStatus && currentSong ? currentSong : null);
+
     set({
       isPlaying: !playingStatus,
     })
   },
 
   playNext: () => {
-    const { currentIndex, queue } = get();
+    const {currentIndex, queue} = get();
     const nextIndex = currentIndex + 1;
 
     if (nextIndex < queue.length) {
       const nextSong = queue[nextIndex];
+
+      updateActivity(nextSong);
+
       set({
         currentSong: nextSong,
         currentIndex: nextIndex,
         isPlaying: true,
       })
-    }else {
+    } else {
       set({
         isPlaying: false,
       })
+      updateActivity(null);
     }
   },
 
   playPrev: () => {
-    const { currentIndex, queue } = get();
+    const {currentIndex, queue} = get();
     const prevIndex = currentIndex - 1;
 
     if (prevIndex >= 0) {
       const prevSong = queue[prevIndex];
+
+      updateActivity(prevSong);
+
       set({
         currentSong: prevSong,
         currentIndex: prevIndex,
         isPlaying: true,
       })
-    }else {
+    } else {
       set({
         isPlaying: false,
       })
+      updateActivity(null);
     }
   },
 }))
