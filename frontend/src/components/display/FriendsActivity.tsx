@@ -27,7 +27,9 @@ const FriendsActivity = () => {
         <div className="p-4 space-y-4">
           {users.map((user) => {
             const activity = userActivities.get(user.clerkId);
-            console.log(userActivities);
+            console.log("user_activities", user.clerkId)
+            console.log("user", userActivities)
+            console.log("activity", activity);
             const isPlaying = activity && activity !== "Idle"
               return (
                 <div key={user._id}
