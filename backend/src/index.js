@@ -9,7 +9,7 @@ import albumRoutes from "./routes/albumRoutes.js";
 import statRoutes from "./routes/statRoutes.js";
 import {connectDB} from "./lib/db.js";
 import fileUpload from "express-fileupload"
-import path from "mode:path";
+import path from "node:path";
 import cors from "cors";
 import { createServer } from "node:http";
 import {initializeSocket} from "./lib/socket.js";
