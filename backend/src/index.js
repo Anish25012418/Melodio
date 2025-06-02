@@ -9,10 +9,12 @@ import albumRoutes from "./routes/albumRoutes.js";
 import statRoutes from "./routes/statRoutes.js";
 import {connectDB} from "./lib/db.js";
 import fileUpload from "express-fileupload"
-import path from "path";
+import path from "mode:path";
 import cors from "cors";
-import { createServer } from "http";
+import { createServer } from "node:http";
 import {initializeSocket} from "./lib/socket.js";
+import cron from "node-cron";
+import fs from "node:fs";
 
 
 dotenv.config();
@@ -38,12 +40,35 @@ app.use(fileUpload({
   }
 }))
 
+const tempDir = path.join(process.cwd(), "tmp");
+//corn jobs
+cron.schedule("0 * * * *", async () => {
+  if (fs.existsSync(tempDir)) {
+    fs.readdir(tempDir, (err, files) => {
+      if (err) {
+        console.error("error", err);
+        return;
+      }
+      for (const file of files) {
+        fs.unlink(path.join(tempDir, file), err => {})
+      }
+    })
+  }
+})
+
 app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/songs", songRoutes);
 app.use("/api/albums", albumRoutes);
 app.use("/api/stats", statRoutes);
+
+if(process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname, "../frontend/dist")));
+  app.get("*", (req, res) => {
+    res.sendFile(path.resolve(__dirname, "../frontend/dist/index.html"));
+  })
+}
 
 //error handler
 app.use((err, req, res, next) => {
